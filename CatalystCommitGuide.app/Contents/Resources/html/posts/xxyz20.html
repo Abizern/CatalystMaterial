@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I enable / disable menubar items based on whats visible on screen? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I enable / disable menubar items based on whats visible on screen?<span id="c741b603-1"></span></h1>
+<p>Catalyst, just like Cocoa, uses the <a href="::responderchain">responder chain</a> to figure out whether an action in a menu can be performed. <a href="::menubar">Remember, that a menu bar on iOS is composed out of <code>UIAction</code>, <code>UICommand</code>, and <code>UIMenu</code> objects.</a></p>
+<p>The way that works is as follows:</p>
+<ol>
+<li>When you open a menu in the menu bar with your mouse</li>
+<li>UIKit will have a look at the first responder and call</li>
+<li><a href="https://developer.apple.com/documentation/uikit/uiresponder/1621105-canperformaction"><code>canPerformAction(_:withSender:)</code></a> to figure out if the first responder has a matching <code>@IBAction someMethod</code> that fits the selector from the menubar item in question</li>
+<li>If the first responder returns no, it will ask the next responder</li>
+<li>If a responder returns yes, then this menu bar entry will be enabled (clickable) and this responder (i.e. object or view controller) will be set as the current <code>target</code> of the menu bar entry.</li>
+<li>If the next responder is nil - that is, it UIKit reached the end of the responder chain - it will stop and the menu bar entry will be disabled.</li>
+</ol>
+<p>This process happens for each item in the menubar.</p>
+<p>If you want to influence how a menu bar item becomes enabled / disabled based on the particulars of your view controller, you can override <code>canPerformAction</code> and write custom logic. Here is a quick example. Here, we imagine that a menubar action should only be enabled if we have actual text in our textField.</p>
+<pre class="Swift"><code><span class="source swift"><span class="keyword other declaration-modifier swift">override</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">canPerformAction</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ action: Selector, withSender sender: Any?<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> <span class="support type swift">Bool</span> </span><span class="punctuation definition code-block begin swift">{</span>
+  <span class="keyword statement swift">guard</span> <span class="keyword operator logical swift">!</span>(textField<span class="keyword operator custom postfix unary swift">.</span>text ?? <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">&quot;</span></span>)<span class="keyword operator custom postfix unary swift">.</span>isEmpty <span class="keyword control if swift">else</span> { <span class="keyword control transfer swift">return</span> <span class="keyword constant boolean swift">false</span> <span class="punctuation definition code-block end swift">}</span></span>
+  <span class="keyword control transfer swift">return</span> <span class="keyword other statement swift">super</span><span class="keyword operator custom postfix unary swift">.</span>canPerformAction(action, withSender: sender)
+}
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

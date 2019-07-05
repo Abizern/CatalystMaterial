@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I create a toolbar - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I create a toolbar<span id="f3cc9c29-1"></span></h1>
+<h2>Preparations<span id="f3cc9c29-2"></span></h2>
+<p>Note that in <em>Beta 2</em> you need to manually import a special bridging header if you want to use <code>NSToolbar</code>. <a href="::bridgingheader">Here's how to do it</a>.</p>
+<p>The best way to insert toolbars is to use the new <code>UIScene</code> API that Apple introduced with iOS 13. The gist is that you use a <code>SceneDelegate</code> and in the <code>scene:willConnectToSession:options</code> method, you can modify a window scene's <code>titlebar</code> by setting a new <code>NSToolbar</code> on it.</p>
+<p>If your project doesn't have a <code>SceneDelegate</code> yet, <a href="::scenedelegate">here's a brief primer on how to set it up.</a>. This delegate is - as far as I'm aware - required to support toolbars.</p>
+<h2>Modifying the Scene<span id="f3cc9c29-3"></span></h2>
+<p>The first step is to modify the <code>scene(willConnectTo:options:)</code> method in your <code>SceneDelegate</code> to check if we're running <code>UIKitForMac</code> - after all, iOS doesn't have toolbars - and then make sure that our scene is actually a <code>UIWindowScene</code>:</p>
+<pre class="Swift"><code><span class="source swift"> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">scene</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene<span class="keyword operator custom postfix unary swift">.</span>ConnectionOptions<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword statement swift">guard</span> <span class="storage type swift">let</span> windowScene <span class="keyword operator assignment swift">=</span> (scene <span class="keyword operator type-casting swift">as?</span> UIWindowScene) <span class="keyword control if swift">else</span> { <span class="keyword control transfer swift">return</span> <span class="punctuation definition code-block end swift">}</span></span>
+        #<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+    #endif
+}
+</span></code></pre></code></pre>
+<p><a href="https://developer.apple.com/documentation/uikit/uiwindowscene"><code>UIWindowScene</code></a> objects have a <code>titlebar</code> property on macOS. These <code>UITitleBar</code> objects are currently not documented, but the headers expose a <code>toolbar</code> property that you can use to assign a <code>NSToolbar</code> to your window:</p>
+<pre class="Swift"><code><span class="source swift"> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">scene</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene<span class="keyword operator custom postfix unary swift">.</span>ConnectionOptions<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword statement swift">guard</span> <span class="storage type swift">let</span> windowScene <span class="keyword operator assignment swift">=</span> (scene <span class="keyword operator type-casting swift">as?</span> UIWindowScene) <span class="keyword control if swift">else</span> { <span class="keyword control transfer swift">return</span> <span class="punctuation definition code-block end swift">}</span></span>
+        #<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+    <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Create a new toolbar (see below)</span>
+    <span class="storage type swift">let</span> newToolbar <span class="keyword operator assignment swift">=</span> makeMyFancyToolbar()
+
+    <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Insert it into the titlebar</span>
+    windowScene<span class="keyword operator custom postfix unary swift">.</span>titlebar<span class="keyword operator custom postfix unary swift">.</span>toolbar <span class="keyword operator assignment swift">=</span> <span class="keyword other statement swift">self</span>
+
+    <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Hide the window title, looks nicer</span>
+    windowScene<span class="keyword operator custom postfix unary swift">.</span>titlebar<span class="keyword operator custom postfix unary swift">.</span>titleVisibility <span class="keyword operator assignment swift">=</span> <span class="keyword operator custom prefix unary swift">.</span>hidden
+    #endif
+}
+</span></code></pre></code></pre>
+<p>So this is how we insert an actual toolbar into our window. The last remaining step is to create such a toolbar, so how does that work?</p>
+<h2>Creating a Toolbar<span id="f3cc9c29-4"></span></h2>
+<p>This is actually a multi-step process as toolbars are quit versatile. You begin by instantiating a new toolbar and configuring it accordingly:</p>
+<pre class="Swift"><code><span class="source swift"><span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Create the toolbar</span>
+<span class="storage type swift">let</span> toolbar <span class="keyword operator assignment swift">=</span> NSToolbar(identifier: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">M</span><span class="string quoted double swift">y</span><span class="string quoted double swift">F</span><span class="string quoted double swift">a</span><span class="string quoted double swift">n</span><span class="string quoted double swift">c</span><span class="string quoted double swift">y</span><span class="string quoted double swift">T</span><span class="string quoted double swift">o</span><span class="string quoted double swift">o</span><span class="string quoted double swift">l</span><span class="string quoted double swift">b</span><span class="string quoted double swift">a</span><span class="string quoted double swift">r</span><span class="string quoted double swift">&quot;</span></span>)
+
+<span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Assign the delegate</span>
+toolbar<span class="keyword operator custom postfix unary swift">.</span>delegate <span class="keyword operator assignment swift">=</span> <span class="keyword other statement swift">self</span>
+</span></code></pre></code></pre>
+<p>As you can see, the configuration is just two lines of code (for now) but toolbars employ a delegate that you can leverage to configure them in much more detail. Lets see how.</p>
+<h2>Implementing the NSToolbarDelegate protocol<span id="f3cc9c29-5"></span></h2>
+<p>First, you need an object that can conform to your toolbar delegate. For simplicity, lets just take our <code>SceneDelegate</code>. However, this can be any object and for more complex setups could be, for example, your own <code>MyToolbarController</code> class.</p>
+<pre class="Swift"><code><span class="source swift">#<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+<span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+}
+#endif
+</span></code></pre></code></pre>
+<p>Again, make sure this code only compiles on macOS. Next, lets implement the bare minimum needed to display a toolbar.</p>
+<p>Toolbars are versatile and allow your users to configure them and modify their contents. Our toolbar will just display a button on the right side. Toolbars identify their contents via toolbar identifiers of type <code>NSToolbarItem.Identifier</code>. Each item in the toolbar has a custom identifier. This makes it easy for the system to understand which items are in the toolbar, which can be customized, removed, etc. So in order for us to add a button, we need an identifier for our button:</p>
+<pre class="Swift"><code><span class="source swift"><span class="keyword other access-level-modifier swift">private</span> <span class="storage type swift">let</span> OurButtonToolbarIdentifier <span class="keyword operator assignment swift">=</span> NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier(rawValue: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">O</span><span class="string quoted double swift">u</span><span class="string quoted double swift">r</span><span class="string quoted double swift">B</span><span class="string quoted double swift">u</span><span class="string quoted double swift">t</span><span class="string quoted double swift">t</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>)
+
+#<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+<span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+}
+#endif
+</span></code></pre></code></pre>
+<p>Next, we need to implement two methods that are called on the delegate to figure out what to display in the toolbar:</p>
+<ol>
+<li><code>toolbarDefaultItemIdentifiers</code>: This returns the identifiers for the items that should be in the toolbar <em>by default</em></li>
+<li><code>toolbarAllowedItemIdentifiers</code>: This returns the identifiers that are <em>currently</em> allowed in the toolbar</li>
+</ol>
+<p>We will implement default first:</p>
+<pre class="Swift"><code><span class="source swift"><span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbarDefaultItemIdentifiers</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> [NSToolbarItem.Identifier] </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control transfer swift">return</span> [NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="keyword operator custom postfix unary swift">.</span>flexibleSpace,
+                OurButtonToolbarIdentifier]
+    <span class="punctuation definition code-block end swift">}</span></span>
+}
+</span></code></pre></code></pre>
+<p>Here, we're returning an array of two items. The <em>last</em> is our <code>OurButtonToolbarIdentifier</code>. The <em>first</em> is a &quot;flexible space&quot; identifier that will consume as much horizontal space as possible, thus pushing our button all the way to the right.</p>
+<p>For simplicity, the second method, <code>toolbarAllowedItemIdentifiers</code> just calls the first one.</p>
+<pre class="Swift"><code><span class="source swift"><span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbarDefaultItemIdentifiers</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> [NSToolbarItem.Identifier] </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control transfer swift">return</span> [NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="keyword operator custom postfix unary swift">.</span>flexibleSpace,
+                OurButtonToolbarIdentifier]
+    <span class="punctuation definition code-block end swift">}</span></span>
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbarAllowedItemIdentifiers</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> [NSToolbarItem.Identifier] </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control transfer swift">return</span> toolbarDefaultItemIdentifiers(toolbar)
+    <span class="punctuation definition code-block end swift">}</span></span>
+}
+</span></code></pre></code></pre>
+<p>Now that we told the toolbar how to display itself, we just need to create those items (in our case just our button):</p>
+<pre class="Swift"><code><span class="source swift"><span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier, willBeInsertedIntoToolbar flag: <span class="support type swift">Bool</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSToolbarItem? </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control if swift">if</span> (itemIdentifier <span class="keyword operator comparative swift">==</span> OurButtonToolbarIdentifier) {
+        <span class="storage type swift">let</span> barButtonItem <span class="keyword operator assignment swift">=</span> UIBarButtonItem(barButtonSystemItem: UIBarButtonItem<span class="keyword operator custom postfix unary swift">.</span>SystemItem<span class="keyword operator custom postfix unary swift">.</span>add,
+                              target: <span class="keyword other statement swift">self</span>,
+                  action: #selector(<span class="keyword other statement swift">self</span><span class="keyword operator custom postfix unary swift">.</span>myFancyAction(sender:)))
+            <span class="storage type swift">let</span> button <span class="keyword operator assignment swift">=</span> NSToolbarItem(itemIdentifier: itemIdentifier, barButtonItem: barButtonItem)
+            <span class="keyword control transfer swift">return</span> button
+        <span class="punctuation definition code-block end swift">}</span></span>
+        <span class="keyword control transfer swift">return</span> <span class="constant nil swift">nil</span>
+    }
+</span></code></pre></code></pre>
+<p>Again, this is simple enough. We just create a <code>UIBarButtonItem</code>, wrap it into a <code>NSToolbarItem</code> and return it. There're a lot of options here that we will not go into, but reading the headers and the documentation will help you along if you need more complex setups.</p>
+<p><a href="::hidetabbar">If you want to hide your existing iOS / UIKit toolbar, too, have a look at this section.</a></p>
+<p>Here's the whole code <code>SceneDelegate</code> in one section:</p>
+<pre class="Swift"><code><span class="source swift"><span class="meta import swift"><span class="keyword other import swift">import</span> <span class="support type module import swift">UIKit</span></span>
+
+<span class="storage type swift">class</span> SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+    <span class="storage type swift">var</span> window: UIWindow?
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">scene</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene<span class="keyword operator custom postfix unary swift">.</span>ConnectionOptions<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword statement swift">guard</span> <span class="storage type swift">let</span> windowScene <span class="keyword operator assignment swift">=</span> (scene <span class="keyword operator type-casting swift">as?</span> UIWindowScene) <span class="keyword control if swift">else</span> { <span class="keyword control transfer swift">return</span> <span class="punctuation definition code-block end swift">}</span></span>
+
+        #<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+        <span class="keyword control if swift">if</span> <span class="storage type swift">let</span> titlebar <span class="keyword operator assignment swift">=</span> windowScene<span class="keyword operator custom postfix unary swift">.</span>titlebar {
+            titlebar<span class="keyword operator custom postfix unary swift">.</span>titleVisibility <span class="keyword operator assignment swift">=</span> <span class="keyword operator custom prefix unary swift">.</span>hidden
+            titlebar<span class="keyword operator custom postfix unary swift">.</span>toolbar <span class="keyword operator assignment swift">=</span> makeMyFancyToolbar()
+        }
+        #endif
+    }
+
+    <span class="keyword other access-level-modifier swift">private</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">makeMyFancyToolbar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSToolbar </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="storage type swift">let</span> toolbar <span class="keyword operator assignment swift">=</span> NSToolbar(identifier: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">M</span><span class="string quoted double swift">y</span><span class="string quoted double swift">T</span><span class="string quoted double swift">o</span><span class="string quoted double swift">o</span><span class="string quoted double swift">l</span><span class="string quoted double swift">b</span><span class="string quoted double swift">a</span><span class="string quoted double swift">r</span><span class="string quoted double swift">&quot;</span></span>)
+        toolbar<span class="keyword operator custom postfix unary swift">.</span>delegate <span class="keyword operator assignment swift">=</span> <span class="keyword other statement swift">self</span>
+        <span class="keyword control transfer swift">return</span> toolbar
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="storage modifier attribute swift"><span class="punctuation definition attribute swift">@</span>objc</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">myFancyAction</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>sender: UIBarButtonItem<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        print(<span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">B</span><span class="string quoted double swift">u</span><span class="string quoted double swift">t</span><span class="string quoted double swift">t</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift"> </span><span class="string quoted double swift">P</span><span class="string quoted double swift">r</span><span class="string quoted double swift">e</span><span class="string quoted double swift">s</span><span class="string quoted double swift">s</span><span class="string quoted double swift">e</span><span class="string quoted double swift">d</span><span class="string quoted double swift">&quot;</span></span>)
+    <span class="punctuation definition code-block end swift">}</span></span>
+}
+
+#<span class="keyword control if swift">if</span> targetEnvironment(UIKitForMac)
+
+<span class="keyword other access-level-modifier swift">private</span> <span class="storage type swift">let</span> OurButtonToolbarIdentifier <span class="keyword operator assignment swift">=</span> NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier(rawValue: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">O</span><span class="string quoted double swift">u</span><span class="string quoted double swift">r</span><span class="string quoted double swift">B</span><span class="string quoted double swift">u</span><span class="string quoted double swift">t</span><span class="string quoted double swift">t</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>)
+
+<span class="storage type swift">extension</span> SceneDelegate: NSToolbarDelegate {
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier, willBeInsertedIntoToolbar flag: <span class="support type swift">Bool</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSToolbarItem? </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control if swift">if</span> (itemIdentifier <span class="keyword operator comparative swift">==</span> OurButtonToolbarIdentifier) {
+            <span class="storage type swift">let</span> barButton <span class="keyword operator assignment swift">=</span> UIBarButtonItem(barButtonSystemItem: <span class="keyword operator custom prefix unary swift">.</span>add, target: <span class="keyword other statement swift">self</span>, action: #selector(myFancyAction(sender:)))
+            <span class="storage type swift">let</span> button <span class="keyword operator assignment swift">=</span> NSToolbarItem(itemIdentifier: itemIdentifier, barButtonItem: barButton)
+            <span class="keyword control transfer swift">return</span> button
+        <span class="punctuation definition code-block end swift">}</span></span>
+        <span class="keyword control transfer swift">return</span> <span class="constant nil swift">nil</span>
+    }
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbarDefaultItemIdentifiers</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> [NSToolbarItem.Identifier] </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control transfer swift">return</span> [NSToolbarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="keyword operator custom postfix unary swift">.</span>flexibleSpace, OurButtonToolbarIdentifier]
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">toolbarAllowedItemIdentifiers</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ toolbar: NSToolbar<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> [NSToolbarItem.Identifier] </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control transfer swift">return</span> toolbarDefaultItemIdentifiers(toolbar)
+    <span class="punctuation definition code-block end swift">}</span></span>
+}
+#endif
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

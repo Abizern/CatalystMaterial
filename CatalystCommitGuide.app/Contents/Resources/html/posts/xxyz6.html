@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I create a sidebar - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I create a sidebar<span id="a2b63938-1"></span></h1>
+<p>Sidebars are a staple of macOS. Many apps on macOS have sidebars and use them to support a huge variety of usage scenarios. Apple added sidebar support right into Catalyst. By default, any Master-Detail view implemented using the <code>UISplitViewController</code> will inhibit macOS sidebar behaviour. However, if you just do that, the sidebar contents (that is, the Master part of the Master Detail View) will look strangely out of place. The rows still look like normal UIKit Rows:</p>
+<p><img src="cxxy/sidebars.jpeg" alt="Sidebars" /></p>
+<p>Thankfully, this can easily be fixed. Apple offers a new property on the <code>UISplitViewController</code>:</p>
+<pre class="Swift"><code><span class="source swift"><span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> The background style of the primary view controller.</span>
+<span class="storage modifier attribute swift"><span class="punctuation definition attribute swift">@</span><span class="punctuation definition attribute-arguments begin swift">available</span></span>(<span class="meta attribute arguments swift">iOS <span class="constant numeric integer decimal swift">13</span><span class="keyword operator custom postfix unary swift">.</span><span class="constant numeric integer decimal swift">0</span>, <span class="keyword operator arithmetic swift">*</span></span><span class="punctuation definition attribute-arguments end swift">)</span>
+<span class="keyword other access-level-modifier swift">open</span> <span class="storage type swift">var</span> primaryBackgroundStyle: UISplitViewController<span class="keyword operator custom postfix unary swift">.</span>BackgroundStyle
+</span></code></pre></code></pre>
+<p>If you're on Catalyst, you can set this to <code>.sidebar</code> in order to get the macOS native sidebar look and feel from the right side of the screenshot above:</p>
+<pre class="Swift"><code><span class="source swift">primaryBackgroundStyle <span class="keyword operator assignment swift">=</span> <span class="keyword operator custom prefix unary swift">.</span>sidebar
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

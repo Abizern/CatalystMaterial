@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How does the iOS app lifecycle work on macOS? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How does the iOS app lifecycle work on macOS?<span id="aa60ecce-1"></span></h1>
+<p>The <a href="https://developer.apple.com/videos/play/wwdc2019/235/">&quot;Taking iPad apps for Mac to the Next Level&quot; talk at WWDC 2019</a> has a fantastic overview of all the changes. Here is a brief overview:</p>
+<ul>
+<li>The <code>UIApplication</code> lifecycle is fully supported on macOS</li>
+<li>The sequence is the same as on macOS</li>
+<li>State changes, however, do affect the Mac less, as are almost always <em>Foreground</em> + <em>Active</em> on macOS.</li>
+<li>Apps only enter background during termination and inactive when launching in the background.</li>
+<li>Your app should still take <a href="https://developer.apple.com/library/archive/documentation/Performance/Conceptual/power_efficiency_guidelines_osx/AppNap.html">App Napp</a> into account</li>
+<li>Background modes are allowed to finish when an app closes. The background tasks continue even though the app is already not visible anymore to the user</li>
+<li>Apps are not killed when they consume too much memory</li>
+<li>Background audio is not supported because users expect audio to stop when they quit an app</li>
+</ul>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

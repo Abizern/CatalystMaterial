@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I support multiple *different* windows - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I support multiple <em>different</em> windows ::multidifwindow<span id="21f58b59-1"></span></h1>
+<h2>How do I setup the a new scene?<span id="21f58b59-2"></span></h2>
+<p>A new scene needs a new, different scene configuration. The creation of scene configurations</p>
+<p>First, you have to define a user activity and tell your application in the <code>info.plist</code> to accept it by adding it to the list of user activities:</p>
+<p><img src="cxxy/useractivity.png" alt="" /></p>
+<p>Then, you need to define a new scene configuration in your <em>plist</em>:</p>
+<p><img src="cxxy/multiscene.png" alt="" /></p>
+<p>Here you have the chance to load a different storyboard. Because, after all, we want the new window to be a different window. So it should also be a different storyboard.</p>
+<p>Next up, say we have a button that you can click in order to spawn the new window. This is what you do:</p>
+<pre class="Swift"><code><span class="source swift"><span class="storage type swift">let</span> userActivity <span class="keyword operator assignment swift">=</span> NSUserActivity(activityType: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">c</span><span class="string quoted double swift">o</span><span class="string quoted double swift">m</span><span class="string quoted double swift">.</span><span class="string quoted double swift">s</span><span class="string quoted double swift">t</span><span class="string quoted double swift">y</span><span class="string quoted double swift">l</span><span class="string quoted double swift">e</span><span class="string quoted double swift">m</span><span class="string quoted double swift">a</span><span class="string quoted double swift">c</span><span class="string quoted double swift">.</span><span class="string quoted double swift">n</span><span class="string quoted double swift">e</span><span class="string quoted double swift">r</span><span class="string quoted double swift">a</span><span class="string quoted double swift">u</span><span class="string quoted double swift">.</span><span class="string quoted double swift">o</span><span class="string quoted double swift">p</span><span class="string quoted double swift">e</span><span class="string quoted double swift">n</span><span class="string quoted double swift">R</span><span class="string quoted double swift">e</span><span class="string quoted double swift">s</span><span class="string quoted double swift">u</span><span class="string quoted double swift">l</span><span class="string quoted double swift">t</span><span class="string quoted double swift">&quot;</span></span>)
+
+<span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> If you need custom data for your new window initialization, you can</span>
+<span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> put it into the userInfo here</span>
+userActivity<span class="keyword operator custom postfix unary swift">.</span>userInfo <span class="keyword operator assignment swift">=</span> [<span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">u</span><span class="string quoted double swift">s</span><span class="string quoted double swift">e</span><span class="string quoted double swift">r</span><span class="string quoted double swift">i</span><span class="string quoted double swift">d</span><span class="string quoted double swift">&quot;</span></span>: <span class="constant numeric integer decimal swift">1234</span>]
+
+UIApplication<span class="keyword operator custom postfix unary swift">.</span>shared<span class="keyword operator custom postfix unary swift">.</span>requestSceneSessionActivation(<span class="constant nil swift">nil</span>, userActivity: userActivity, options: <span class="constant nil swift">nil</span>) { (e) <span class="keyword control loop swift">in</span>
+  <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> If we happen to have an error</span>
+  print(<span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">e</span><span class="string quoted double swift">r</span><span class="string quoted double swift">r</span><span class="string quoted double swift">o</span><span class="string quoted double swift">r</span><span class="string quoted double swift">&quot;</span></span>, e)
+}
+</span></code></pre></code></pre>
+<p>So, what's happening here. We create a new user activity. We told <code>UIApplication</code> to initialize a new scene with that activity. The activity can include an additional payload for the new window (user id, etc)</p>
+<p>Finally, we need to tell the system that this new scene that we're creating should use the other scene configuration. We can do that in our app delegate:</p>
+<pre class="Swift"><code><span class="source swift">  <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">application</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ application: UIApplication,
+                   configurationForConnecting connectingSceneSession: UISceneSession,
+                   options: UIScene<span class="keyword operator custom postfix unary swift">.</span>ConnectionOptions<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> UISceneConfiguration </span><span class="punctuation definition code-block begin swift">{</span>
+    <span class="keyword control if swift">if</span> options<span class="keyword operator custom postfix unary swift">.</span>userActivities<span class="keyword operator custom postfix unary swift">.</span>first?<span class="keyword operator custom postfix unary swift">.</span>activityType <span class="keyword operator comparative swift">==</span> <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">c</span><span class="string quoted double swift">o</span><span class="string quoted double swift">m</span><span class="string quoted double swift">.</span><span class="string quoted double swift">s</span><span class="string quoted double swift">t</span><span class="string quoted double swift">y</span><span class="string quoted double swift">l</span><span class="string quoted double swift">e</span><span class="string quoted double swift">m</span><span class="string quoted double swift">a</span><span class="string quoted double swift">c</span><span class="string quoted double swift">.</span><span class="string quoted double swift">n</span><span class="string quoted double swift">e</span><span class="string quoted double swift">r</span><span class="string quoted double swift">a</span><span class="string quoted double swift">u</span><span class="string quoted double swift">.</span><span class="string quoted double swift">o</span><span class="string quoted double swift">p</span><span class="string quoted double swift">e</span><span class="string quoted double swift">n</span><span class="string quoted double swift">R</span><span class="string quoted double swift">e</span><span class="string quoted double swift">s</span><span class="string quoted double swift">u</span><span class="string quoted double swift">l</span><span class="string quoted double swift">t</span><span class="string quoted double swift">&quot;</span></span> {
+      <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Load our new window configuration</span>
+      <span class="keyword control transfer swift">return</span> UISceneConfiguration(name: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">N</span><span class="string quoted double swift">e</span><span class="string quoted double swift">w</span><span class="string quoted double swift"> </span><span class="string quoted double swift">C</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">f</span><span class="string quoted double swift">i</span><span class="string quoted double swift">g</span><span class="string quoted double swift">u</span><span class="string quoted double swift">r</span><span class="string quoted double swift">a</span><span class="string quoted double swift">t</span><span class="string quoted double swift">i</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>, sessionRole: connectingSceneSession<span class="keyword operator custom postfix unary swift">.</span>role)
+    <span class="punctuation definition code-block end swift">}</span></span>
+    <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Load our default configuration</span>
+    <span class="keyword control transfer swift">return</span> UISceneConfiguration(name: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">D</span><span class="string quoted double swift">e</span><span class="string quoted double swift">f</span><span class="string quoted double swift">a</span><span class="string quoted double swift">u</span><span class="string quoted double swift">l</span><span class="string quoted double swift">t</span><span class="string quoted double swift"> </span><span class="string quoted double swift">C</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">f</span><span class="string quoted double swift">i</span><span class="string quoted double swift">g</span><span class="string quoted double swift">u</span><span class="string quoted double swift">r</span><span class="string quoted double swift">a</span><span class="string quoted double swift">t</span><span class="string quoted double swift">i</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>, sessionRole: connectingSceneSession<span class="keyword operator custom postfix unary swift">.</span>role)
+  }
+</span></code></pre></code></pre>
+<p>By doing it this way, you can create multiple, different windows. Note that in beta 2, sometimes the user activities disappear <em>on route</em> with Catalysts. So if your <code>options.userActivities</code> is empty, then wait for another beta .. or look at <em>Other Approaches</em> below.</p>
+<h2>Other Approaches<span id="21f58b59-3"></span></h2>
+<p>Another, simpler approach to doing this is to just replace the <code>rootViewController</code> of the <code>UIWindow</code> in the <code>SceneDelegate</code>'s</p>
+<pre class="Swift"><code><span class="source swift"><span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">scene</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene<span class="keyword operator custom postfix unary swift">.</span>ConnectionOptions<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+  window?<span class="keyword operator custom postfix unary swift">.</span>rootViewController <span class="keyword operator assignment swift">=</span> MyCustomUIViewController()
+<span class="punctuation definition code-block end swift">}</span></span>
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

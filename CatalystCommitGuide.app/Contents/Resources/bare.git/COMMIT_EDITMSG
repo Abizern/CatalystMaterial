@@ -1,0 +1,30 @@
+Support for multiple *different* windows. Mostly
+
+So, in practice, what we need to do here, is to create a NSUserActivity
+and, in there, store the payload (i.e. as userInfo) that the new window
+should receive in order to set up. However, currently, due to bugs in 
+Catalina, these payloads seem to not always arrive. So in order to
+still support something, this feature currently loads a random entry
+if the payload is not there. 
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Mon Jul 1 23:33:53 2019 +0200
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   Nerau.xcodeproj/project.pbxproj
+#	modified:   Nerau/AppDelegate.swift
+#	modified:   Nerau/Info.plist
+#	modified:   Nerau/Result/ResultController.swift
+#	new file:   Nerau/ResultSceneDelegate.swift
+#
+# Changes not staged for commit:
+#	modified:   Nerau.xcodeproj/project.xcworkspace/xcuserdata/terhechte.xcuserdatad/UserInterfaceState.xcuserstate
+#
+# Untracked files:
+#	.DS_Store
+#

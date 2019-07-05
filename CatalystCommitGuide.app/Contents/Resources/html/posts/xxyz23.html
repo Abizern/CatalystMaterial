@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>What are some issues that I will run into? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>What are some issues that I will run into?<span id="e664318a-1"></span></h1>
+<ul>
+<li>The bundle identifier for the macOS version of your app is different. If you use bundle identifiers for something specific, be aware of this</li>
+<li>KeyChain sharing differs briefly, <a href="https://developer.apple.com/documentation/security/keychain_services/keychain_items/sharing_access_to_keychain_items_among_a_collection_of_apps">as outlined by Apple here</a> (search for &quot;macOS&quot; on that page)</li>
+<li>Custom multitouch behaviour can't be automated. Views have to be udpated for that</li>
+<li>Your app will not be killed if it consumes too much memory. The system will just swap</li>
+<li></li>
+</ul>
+<h1>I'm using a deprecated iOS framework<span id="e664318a-2"></span></h1>
+<p>With Catalyst, you should use the newever versions of these old, deprecated, frameworks:</p>
+<ul>
+<li>AddressBook -&gt; Contacts</li>
+<li>AddressBookUI -&gt; ContactsUI</li>
+<li>AssetsLibrary -&gt; Photos</li>
+<li>OpenGL ES -&gt; Metal</li>
+<li>GLKit -&gt; MetalKit</li>
+<li>UIWebView -&gt; WKWebView</li>
+</ul>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

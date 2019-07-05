@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I nest touchbars? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I nest touchbars?<span id="1b63f861-1"></span></h1>
+<p>If you have multiple view controllers in your <a href="::responderchain">responder chain</a> that each want to insert something in your <code>NSTouchBar</code> you can simply define the outermost (highest priority) touchbar to host other touchbars alongside. You do that by adding the system default <code>NSTouchBarItem.Identifier.otherItemsProxy</code> to your list of <code>defaultItemIdentifiers</code>:</p>
+<pre class="Swift"><code><span class="source swift">    <span class="keyword other declaration-modifier swift">override</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">makeTouchBar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSTouchBar? </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="storage type swift">let</span> touchBar <span class="keyword operator assignment swift">=</span> NSTouchBar()
+        touchBar<span class="keyword operator custom postfix unary swift">.</span>delegate <span class="keyword operator assignment swift">=</span> <span class="keyword other statement swift">self</span>
+        touchBar<span class="keyword operator custom postfix unary swift">.</span>defaultItemIdentifiers <span class="keyword operator assignment swift">=</span> [MyButtonTouchBarIdentifier,
+                                           NSTouchBarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="keyword operator custom postfix unary swift">.</span>otherItemsProxy]
+        <span class="keyword control transfer swift">return</span> touchBar
+    <span class="punctuation definition code-block end swift">}</span></span>
+</span></code></pre></code></pre>
+<p>Now, if, say, a child view controller would also implement <code>makeTouchBar</code>, its touchbar would be displayed next to our <code>MyButtonTouchBarIdentifier</code> button.</p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

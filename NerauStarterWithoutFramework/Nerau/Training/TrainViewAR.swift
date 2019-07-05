@@ -1,8 +1,11 @@
+
+#if !targetEnvironment(UIKitForMac)
 import ARKit
 import UIKit
 
 /// Imagine the numbers are laid out in a room and one has to move
-/// the iPad around to tap them in the room. 
+/// the iPad around to tap them in the room.
+@available(iOS 13, *)
 final class TrainViewAR: UIView {
     public weak var delegate: TrainViewDelegate?
     let arView = ARSCNView(frame: CGRect.zero)
@@ -27,3 +30,5 @@ extension TrainViewAR: TrainControlViewProtocol {
         delegate?.cancel(with: "Ooopsie")
     }
 }
+#endif
+

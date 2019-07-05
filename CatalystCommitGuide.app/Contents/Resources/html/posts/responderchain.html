@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>What is the responder chain? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>What is the responder chain? ::responderchain<span id="d10ad5b4-1"></span></h1>
+<p>The responder chain is a event handling system at the heart of macOS and iOS.
+Every touch event coming in, for example, uses this responder chain to reach the currently active <code>UIControl</code>. The main building block of the responder chain is the <code>UIResponder</code> class which is a superclass of <code>UIViewController</code> or <code>UIView</code>.</p>
+<p>Apple has very useful information on this available:</p>
+<ul>
+<li><a href="https://developer.apple.com/documentation/uikit/touches_presses_and_gestures/using_responders_and_the_responder_chain_to_handle_events">iOS: Using Responders and the Responder Chain</a></li>
+<li><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/EventOverview/EventArchitecture/EventArchitecture.html">macOS: Event Architecture Overview</a></li>
+</ul>
+<p>Below, I'll quote the most important sections to understand the thing:</p>
+<p>Responders receive the raw event data and must either handle the event or forward it to another responder object. When your app receives an event, UIKit automatically directs that event to the most appropriate responder object, known as the first responder.</p>
+<p>Unhandled events are passed from responder to responder in the active responder chain.</p>
+<p>Here's an image from the Apple Documentation:</p>
+<p><img src="cxxy/responderchain.png" alt="" /></p>
+<p>Now imagine that you're entering text in the text field. The following will happen:</p>
+<ol>
+<li>If the text field does not handle an event, UIKit sends the event to the text field’s parent UIView object</li>
+<li>If that does not handle the event, it is forwarded to the next UIView.</li>
+<li>If that does not handle the event, it is forwarded to the UIViewController (which is the root view controller of the window)</li>
+<li>If the view controller is not handling the event, it is forwarded to the <code>UIApplication</code></li>
+<li>If the UIApplication is not handling the event, it is handled by the <code>UIApplicationDelegate</code></li>
+</ol>
+<p>This also means that if you really need to catch a certain event, you can always set up the required selector / method in your app delegate.</p>
+<h2>Altering the Responder Chain<span id="d10ad5b4-2"></span></h2>
+<p>You can alter the responder chain by overriding the next property of your responder objects. When you do this, the next responder is the object that you return.</p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

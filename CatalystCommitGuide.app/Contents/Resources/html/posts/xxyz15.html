@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I implement preferences on macOS - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I implement preferences on macOS<span id="3b0a1655-1"></span></h1>
+<p>In order to implement the preferences or your app, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/UserDefaults/Preferences/Preferences.html">Apple supports the <em>Settings.bundle</em> technology that has been there since iOS 2.0 (or rather, iPhoneOS 2.0)</a>. The documentation is actually so old, that it is archived and the documentation screenshots look like this:</p>
+<p><img src="cxxy/settings2.jpg" alt="" />
+<img src="cxxy/settings3.jpg" alt="" /></p>
+<p>On iOS, this means that you just need to add a new bundle target to your project and fill it with a collection of specially crafted <code>Plist</code> files. These settings then appear in the general iOS settings and any changes done there are stored in the <code>NSUserDefaults</code>.</p>
+<p>If your app supports settings bundles, then your Catalyst app will automatically add a Preferences window to your app that looks something like this:</p>
+<p><img src="cxxy/settings1.png" alt="" /></p>
+<p>For details on how to achieve this, <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/UserDefaults/Preferences/Preferences.html">refer to Apples documentation.</a></p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

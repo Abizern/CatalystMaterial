@@ -1,7 +1,7 @@
-import UIKit
+import WebKit
 
 public final class HelpContactController: UIViewController {
-    @IBOutlet var webView: UIWebView!
+    @IBOutlet var webView: WKWebView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()

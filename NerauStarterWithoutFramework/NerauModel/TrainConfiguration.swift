@@ -5,7 +5,12 @@ public struct TrainConfiguration {
         case easy, medium, hard, insane
     }
     public enum Mode: Int {
+        #if !targetEnvironment(UIKitForMac)
         case normal, AR
+        #else
+        case normal
+        #endif
+
     }
     public var difficulty: Difficulty
     public var length: Int

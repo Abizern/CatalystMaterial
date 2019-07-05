@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I implement drag and drop - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I implement drag and drop<span id="10df0ddc-1"></span></h1>
+<p>Drag and drop is implemented via the same mechanisms that also support drag and drop on iOS. Below, you can see an example of a simple <code>UIViewContoller</code> that allows droping JSON files onto the application in order to import them.</p>
+<pre class="Swift"><code><span class="source swift"><span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span>/ This is the identifier of a JSON File</span>
+<span class="keyword other access-level-modifier swift">private</span> <span class="storage type swift">let</span> JSONTypeIdentifier <span class="keyword operator assignment swift">=</span> <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">p</span><span class="string quoted double swift">u</span><span class="string quoted double swift">b</span><span class="string quoted double swift">l</span><span class="string quoted double swift">i</span><span class="string quoted double swift">c</span><span class="string quoted double swift">.</span><span class="string quoted double swift">j</span><span class="string quoted double swift">s</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>
+
+<span class="storage type swift">extension</span> MyDragAndDropSupportingViewController: UIDropInteractionDelegate {
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">dropInteraction</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ interaction: UIDropInteraction,
+                         canHandle session: UIDropSession<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> <span class="support type swift">Bool</span> </span><span class="punctuation definition code-block begin swift">{</span>
+    <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> We tell the drag and drop system that we support JSON</span>
+        <span class="keyword control transfer swift">return</span> session<span class="keyword operator custom postfix unary swift">.</span>hasItemsConforming(toTypeIdentifiers: [JSONTypeIdentifier])
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">dropInteraction</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> UIDropProposal </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> If a drag comes in, we copy the file. We don&#39;t want to consume it.</span>
+        <span class="keyword control transfer swift">return</span> UIDropProposal(operation: <span class="keyword operator custom prefix unary swift">.</span>copy)
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">dropInteraction</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ interaction: UIDropInteraction, performDrop session: UIDropSession<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> This is called with an array of NSURL</span>
+    session<span class="keyword operator custom postfix unary swift">.</span>loadObjects(ofClass: URL<span class="keyword operator custom postfix unary swift">.</span><span class="keyword other statement swift">self</span>) { urls <span class="keyword control loop swift">in</span>
+            <span class="keyword control loop swift">for</span> url <span class="keyword control loop swift">in</span> urls {
+                importJSONData(from: url)
+            <span class="punctuation definition code-block end swift">}</span></span>
+        }
+    }
+}
+</span></code></pre></code></pre>
+<p>As with other Catalyst technologies, <a href="https://developer.apple.com/documentation/uikit/drag_and_drop/making_a_view_into_a_drop_destination">there is a lot of good Apple documentation for this as this is the same as on iOS.</a></p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

@@ -4,6 +4,7 @@ public final class SidebarCell: UITableViewCell {
     @IBOutlet var badgeLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var badgeBackgroundView: UIView!
+
     var cornerRadius: Int = 0 {
         didSet {
             badgeBackgroundView?.layer.cornerRadius = CGFloat(self.cornerRadius)
@@ -41,6 +42,7 @@ public final class SidebarController: UITableViewController {
         Database.shared.registerForChanges(item: self) { [weak self] in
             self?.updateStructure()
         }
+        splitViewController?.primaryBackgroundStyle = .sidebar
         updateStructure()
     }
     

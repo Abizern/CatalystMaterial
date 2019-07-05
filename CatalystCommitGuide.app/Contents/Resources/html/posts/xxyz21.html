@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I enable / disable toolbar items based on whats visible on screen? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I enable / disable toolbar items based on whats visible on screen?<span id="8d1b734b-1"></span></h1>
+<p>Currently, there doesn't seem to be a way to do this. I've tracked this as issue <em>FB6360289</em> in Apple's Feedback tool.</p>
+<p>I could not figure out how to dynamically update the enabled / disabled status of toolbar items based on app actions such as a new controller entering the responder chain. This makes it very difficult to implement toolbars that adapt to the users actions. Event Apple’s own Catalyst apps seem to be affected by this: The Stocks app has a “Share” toolbar item that just does nothing when pressed and nothing is selected (it is enabled, not disabled).</p>
+<p>The only possible solution I found is to update the complete toolbar manually with a new set of toolbar items in case it should be updated.</p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

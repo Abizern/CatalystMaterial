@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I sign the app - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I sign the app<span id="8bb703bb-1"></span></h1>
+<p>Catalyst apps, just like simulator apps, do not require signing. However, since Catalyst apps run on the real hardware, right away, they are set up for signing by default.</p>
+<p>If you have a paid Apple Developer account, that is not a problem. However if you're a student or just looking into Catalyst, you might not have a paid Apple Developer account.</p>
+<p>Thankfully, you can test Catalyst apps just fine without a paid account. You only have to go into the signing settings of Xcode (&quot;Target&quot; -&gt; &quot;Signing &amp; Capabilities&quot; -&gt; &quot;Signing Certificate&quot;) and then select &quot;Sign to Run Locally&quot;.</p>
+<p>Now, Xcode will still complain with a small red alert that says &quot;Signing for ... requires a development team&quot;, however it will build the app just fine and also run it just fine.</p>
+<p><img src="cxxy/signing_settings.png" alt="" /></p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

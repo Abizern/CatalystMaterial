@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How can I insert a `New Window` entry into my custom storyboard MainMenu? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How can I insert a <code>New Window</code> entry into my custom storyboard MainMenu? ::newnewwindow<span id="12c5c8fe-1"></span></h1>
+<p>Once you modify your Main Menu, you will find that the entry to create a new window has suddenly disappeared. That happens because the <code>New Window</code> entry is dynamicaly inserted by UIKit depending on whether your app supports multiple windows (or not).</p>
+<p>In order to support this again, you have to do the following:</p>
+<ol>
+<li>Create a new <code>UICommand</code> in your Storyboard for the <code>New Window</code> entry.</li>
+<li>Assign the title and your desired shortcut (probably Command + N).</li>
+<li>Select the <code>First Responder</code> in your <code>MainMenu Scene</code></li>
+</ol>
+<p><img src="cxxy/storyfirstresponder.png" alt="" /></p>
+<ol start="4">
+<li>Switch to the <em>Attributes Inspector</em> (from the inspectors on the right)</li>
+<li>There, you will find an empty list named &quot;User Defined&quot;</li>
+<li>Add a new entry to this list with the following attributes:</li>
+<li>Action: <code>requestNewScene:</code>, Type: <code>id</code> (the default)</li>
+<li>Finally, drag from your <code>UICommand</code> menu entry to the First Responder and select the newly created action.</li>
+</ol>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

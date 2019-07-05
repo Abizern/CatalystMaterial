@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I add TouchBar support? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I add TouchBar support?<span id="73365285-1"></span></h1>
+<h2>Preparations<span id="73365285-2"></span></h2>
+<p>Note that in <em>Beta 2</em> you need to manually import a special bridging header if you want to use touchbars. <a href="::bridgingheader">Here's how to do it</a>.</p>
+<p>With that out of the way, lets have a brief look at touchbars. <a href="https://developer.apple.com/documentation/appkit/nstouchbar">Apple's documentation for the <code>NSTouchBar</code> class is fantastic</a> and it would be a waste to try to replicate all that documentation here. Also, touchbars in Catalyst apps work just like the AppKit touchbars. So all the available <code>NSTouchBar</code> tutorials work just as well for your iPad app.</p>
+<p>In brief, touchbars work as follows: Each controller in the <a href="::responderchain">responder chain</a> is asked whether he has a touchbar that he wants to display via the <code>func makeTouchBar() -&gt; NSTouchBar?</code> method on <code>UIResponder</code> (or <code>NSResponder</code>). The higher up items in the responder chain have priority. Within that method, you return a fully configured touchbar with a proper <code>NSTouchBarDelegate</code> set. The <code>NSTouchBarDelegate</code> allows you to configure the touchbar to your hearts contents. Here's a simple example:</p>
+<p>Make sure to remember that touchbars only appear for objects that conform to <code>UIResponder</code> and are in the <a href="::responderchain">responder chain</a>. A good place for this code is your <code>UIViewController</code> that is currently being displayed.</p>
+<pre class="Swift"><code><span class="source swift"><span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Define the items we want to display in the touch bar via specific identifiers, so UIKit can track them</span>
+<span class="storage type swift">let</span> MyButtonTouchBarIdentifier <span class="keyword operator assignment swift">=</span> NSTouchBarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier(rawValue: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">M</span><span class="string quoted double swift">y</span><span class="string quoted double swift">B</span><span class="string quoted double swift">u</span><span class="string quoted double swift">t</span><span class="string quoted double swift">t</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift">&quot;</span></span>)
+
+<span class="storage type swift">class</span> MyViewController: UIViewController {
+    <span class="keyword other declaration-modifier swift">override</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">makeTouchBar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSTouchBar? </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="storage type swift">let</span> touchBar <span class="keyword operator assignment swift">=</span> NSTouchBar()
+        touchBar<span class="keyword operator custom postfix unary swift">.</span>delegate <span class="keyword operator assignment swift">=</span> <span class="keyword other statement swift">self</span>
+        touchBar<span class="keyword operator custom postfix unary swift">.</span>defaultItemIdentifiers <span class="keyword operator assignment swift">=</span> [MyButtonTouchBarIdentifier,
+                                           NSTouchBarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="keyword operator custom postfix unary swift">.</span>otherItemsProxy]
+        <span class="keyword control transfer swift">return</span> touchBar
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="storage modifier attribute swift"><span class="punctuation definition attribute swift">@</span>objc</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">buttonPressed</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>sender: NSTouchBarItem<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+    <span class="punctuation definition code-block end swift">}</span></span>
+}
+<span class="storage type swift">extension</span> MacSplitViewController: NSTouchBarDelegate {
+
+    <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">touchBar</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem<span class="keyword operator custom postfix unary swift">.</span>Identifier<span class="punctuation definition function-arguments end swift">)</span></span> <span class="meta function-result swift"><span class="keyword operator function-result swift">-&gt;</span> NSTouchBarItem? </span><span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword control switch swift">switch</span> identifier {
+        <span class="keyword control switch swift">case</span> MyButtonTouchBarIdentifier:
+            <span class="keyword control transfer swift">return</span> NSButtonTouchBarItem<span class="keyword operator custom postfix unary swift">.</span><span class="keyword declaration swift">init</span>(identifier: identifier,
+                                             title: <span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">P</span><span class="string quoted double swift">r</span><span class="string quoted double swift">e</span><span class="string quoted double swift">s</span><span class="string quoted double swift">s</span><span class="string quoted double swift"> </span><span class="string quoted double swift">M</span><span class="string quoted double swift">e</span><span class="string quoted double swift">&quot;</span></span>,
+                                             target: <span class="keyword other statement swift">self</span>,
+                                             action: #selector(<span class="keyword other statement swift">self</span><span class="keyword operator custom postfix unary swift">.</span>buttonPressed))
+        <span class="keyword control switch swift">default</span>: <span class="keyword control transfer swift">return</span> <span class="constant nil swift">nil</span>
+        <span class="punctuation definition code-block end swift">}</span></span>
+    }
+}
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

@@ -1,0 +1,236 @@
+/* Author: Carl Calderon */
+/* Name: Tyrann Alex */
+.markdown > pre > code * {
+	color: #4A453D;
+}
+
+.markdown > pre > code .comment {
+	color: #ADADAB;
+}
+
+.markdown > pre > code .string {
+	color: #59AD13;
+}
+
+.markdown > pre > code .constant.numeric {
+	color: #979111;
+}
+
+.markdown > pre > code .constant.language {
+	color: #8E1859;
+	font-style: italic;
+}
+
+.markdown > pre > code .constant.character {
+	color: #8E1859;
+	font-style: italic;
+}
+
+.markdown > pre > code .constant.other {
+	color: #8E1859;
+	font-style: italic;
+}
+
+.markdown > pre > code .variable.language {
+	color: #899E1E;
+}
+
+.markdown > pre > code .variable.other {
+	color: #899E1E;
+}
+
+.markdown > pre > code .keyword {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .storage {
+	color: #9F3C22;
+	font-weight: bold;
+}
+
+.markdown > pre > code .entity.name.class {
+	color: #396DD3;
+}
+
+.markdown > pre > code .entity.other.inherited-class {
+	color: #3B6ED3;
+}
+
+.markdown > pre > code .entity.name.function {
+	color: #88005A;
+}
+
+.markdown > pre > code .variable.parameter {
+	color: #2AB54F;
+}
+
+.markdown > pre > code .keyword.operator {
+	color: #2F4C90;
+}
+
+.markdown > pre > code .entity.name.tag {
+	color: #1E9CC8;
+	font-weight: bold;
+}
+
+.markdown > pre > code .entity.other.attribute-name {
+	color: #6DA6BC;
+}
+
+.markdown > pre > code .string.regexp {
+	color: #59AD13;
+}
+
+.markdown > pre > code .support.function {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .support.constant {
+	color: #CE9251;
+}
+
+.markdown > pre > code .support.type {
+	color: #CE7928;
+}
+
+.markdown > pre > code .support.class {
+	color: #CE7928;
+}
+
+.markdown > pre > code .support.other.variable {
+	color: #CD7521;
+}
+
+.markdown > pre > code .invalid {
+	color: #B3A3A3;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.json .string.quoted.double.json {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.json .meta.structure.array.json .meta.structure.dictionary.json .string.quoted.double.json .- .source.json .meta.structure.dictionary.json .meta.structure.array.json .meta.structure.dictionary.value.json .string.quoted.double.json {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .string.quoted.double.json .- .source.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .string.quoted.double.json {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.value.json .string.quoted.double.json {
+	color: #A5C065;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.json .meta.structure.array.json .string.quoted.double.json {
+	color: #A5C065;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .meta.structure.array.json .meta.structure.dictionary.json .meta.structure.dictionary.value.json .string.quoted.double.json {
+	color: #A5C065;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff {
+	color: #747068;
+}
+
+.markdown > pre > code .source.diff .markup.inserted.diff {
+	color: #59AD13;
+}
+
+.markdown > pre > code .markup.inserted {
+	color: #59AD13;
+}
+
+.markdown > pre > code .source.diff .markup.inserted.diff .punctuation.definition.inserted.diff {
+	color: #59AD1380;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff .markup.deleted.diff {
+	color: #AB2831;
+}
+
+.markdown > pre > code .markup.deleted {
+	color: #AB2831;
+}
+
+.markdown > pre > code .source.diff .markup.deleted.diff .punctuation.definition.inserted.diff {
+	color: #AB283180;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff .markup.changed.diff {
+	color: #3B52C2;
+}
+
+.markdown > pre > code .markup.changed {
+	color: #3B52C2;
+}
+
+.markdown > pre > code .source.diff .markup.changed.diff .punctuation.definition.inserted.diff {
+	color: #3B52C280;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff .meta.diff.range.unified {
+	color: #469BCF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff .meta.diff.range.unified .punctuation.definition.range.diff {
+	color: #469BCF80;
+	font-weight: bold;
+}
+
+.markdown > pre > code .source.diff .meta.diff.header {
+	color: #131212;
+	font-weight: bold;
+}
+
+.markdown > pre > code .markup.heading {
+	color: #74D0EF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .markup.heading .punctuation.definition {
+	color: #F6F3EF;
+	font-weight: bold;
+}
+
+.markdown > pre > code .markup.underline {
+	font-decoration: underline;
+}
+
+.markdown > pre > code .markup.bold {
+	font-weight: bold;
+}
+
+.markdown > pre > code .markup.italic {
+	font-style: italic;
+}
+
+.markdown > pre > code .markup.underline.link {
+	color: #2C7DD0;
+}
+
+.markdown > pre > code .constant.other.reference.link {
+	color: #C02836;
+}
+
+.markdown > pre > code .markup.raw {
+	color: #A0A09D;
+}
+
+.markdown > pre > code .markup.raw.inline {
+	color: #CD673B;
+}
+

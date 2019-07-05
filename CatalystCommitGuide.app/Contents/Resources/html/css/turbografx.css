@@ -1,0 +1,249 @@
+/* Author: Jan T. Sott */
+/* Name: TurboGrafx */
+pre > code * {
+	color: #c0c0c0;
+	background-color: #000000;
+}
+
+pre > code .variable.parameter.function {
+	color: #c0c0c0;
+}
+
+pre > code .comment {
+	color: #808080;
+}
+
+pre > code .punctuation.definition.comment {
+	color: #808080;
+}
+
+pre > code .punctuation.definition.string {
+	color: #c0c0c0;
+}
+
+pre > code .punctuation.definition.variable {
+	color: #c0c0c0;
+}
+
+pre > code .punctuation.definition.string {
+	color: #c0c0c0;
+}
+
+pre > code .punctuation.definition.parameters {
+	color: #c0c0c0;
+}
+
+pre > code .punctuation.definition.string {
+	color: #c0c0c0;
+}
+
+pre > code .punctuation.definition.array {
+	color: #c0c0c0;
+}
+
+pre > code .none {
+	color: #c0c0c0;
+}
+
+pre > code .keyword.operator {
+	color: #c0c0c0;
+}
+
+pre > code .keyword {
+	color: #c000e0;
+}
+
+pre > code .keyword.control {
+	color: #c000e0;
+}
+
+pre > code .variable {
+	color: #e00000;
+}
+
+pre > code .entity.name.function {
+	color: #0076EB;
+}
+
+pre > code .meta.require {
+	color: #0076EB;
+}
+
+pre > code .support.function.any-method {
+	color: #0076EB;
+}
+
+pre > code .meta.class {
+	color: #e0e000;
+}
+
+pre > code .support.class {
+	color: #e0e000;
+}
+
+pre > code .entity.name.class {
+	color: #e0e000;
+}
+
+pre > code .entity.name.type.class {
+	color: #e0e000;
+}
+
+pre > code .keyword.other.special-method {
+	color: #0060c0;
+}
+
+pre > code .storage {
+	color: #c000e0;
+}
+
+pre > code .support.function {
+	color: #00c0c0;
+}
+
+pre > code .string {
+	color: #80e000;
+}
+
+pre > code .constant.other.symbol {
+	color: #80e000;
+}
+
+pre > code .entity.other.inherited-class {
+	color: #80e000;
+}
+
+pre > code .constant.numeric {
+	color: #c08000;
+}
+
+pre > code .none {
+	color: #c08000;
+}
+
+pre > code .none {
+	color: #c08000;
+}
+
+pre > code .constant {
+	color: #c08000;
+}
+
+pre > code .entity.name.tag {
+	color: #e00000;
+}
+
+pre > code .entity.other.attribute-name {
+	color: #c08000;
+}
+
+pre > code .entity.other.attribute-name.id {
+	color: #1D84EB;
+}
+
+pre > code .punctuation.definition.entity {
+	color: #1D84EB;
+}
+
+pre > code .meta.selector {
+	color: #c000e0;
+}
+
+pre > code .none {
+	color: #c08000;
+}
+
+pre > code .markup.heading .punctuation.definition.heading {
+	color: #0060c0;
+}
+
+pre > code .entity.name.section {
+	color: #0060c0;
+}
+
+pre > code .keyword.other.unit {
+	color: #c08000;
+}
+
+pre > code .markup.bold {
+	color: #e0e000;
+	font-weight: bold;
+}
+
+pre > code .punctuation.definition.bold {
+	color: #e0e000;
+	font-weight: bold;
+}
+
+pre > code .markup.italic {
+	color: #c000e0;
+	font-style: italic;
+}
+
+pre > code .punctuation.definition.italic {
+	color: #c000e0;
+	font-style: italic;
+}
+
+pre > code .markup.raw.inline {
+	color: #80e000;
+}
+
+pre > code .string.other.link {
+	color: #e00000;
+}
+
+pre > code .meta.link {
+	color: #c08000;
+}
+
+pre > code .markup.list {
+	color: #e00000;
+}
+
+pre > code .markup.quote {
+	color: #c08000;
+}
+
+pre > code .meta.separator {
+	color: #c0c0c0;
+	background-color: #606060;
+}
+
+pre > code .markup.inserted {
+	color: #80e000;
+}
+
+pre > code .markup.deleted {
+	color: #e00000;
+}
+
+pre > code .markup.changed {
+	color: #c000e0;
+}
+
+pre > code .constant.other.color {
+	color: #00c0c0;
+}
+
+pre > code .string.regexp {
+	color: #00c0c0;
+}
+
+pre > code .constant.character.escape {
+	color: #00c0c0;
+}
+
+pre > code .punctuation.section.embedded {
+	color: #a04020;
+}
+
+pre > code .variable.interpolation {
+	color: #a04020;
+}
+
+pre > code .invalid.illegal {
+	color: #000000;
+	background-color: #e00000;
+}
+

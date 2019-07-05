@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I support keyboard shortcuts? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I support keyboard shortcuts?<span id="86fa1d9a-1"></span></h1>
+<p>Keyboard shortcuts are implemented via the existing <code>UIKeyCommand</code> system on <code>UIResponder</code>. Here's a simple example of how your currently visible view controller can listen for <code>Escape</code> key presses by the user:</p>
+<pre class="Swift"><code><span class="source swift"><span class="storage type swift">class</span> MyKeyListeningViewController: UIViewController {
+    <span class="keyword other declaration-modifier swift">override</span> <span class="storage type swift">var</span> keyCommands: [UIKeyCommand]? {
+        <span class="keyword control transfer swift">return</span> [UIKeyCommand(input: UIKeyCommand<span class="keyword operator custom postfix unary swift">.</span>inputEscape,
+                             modifierFlags: [],
+                             action: #selector(doCancelCommand(sender:)))
+        ]
+    }
+}
+</span></code></pre></code></pre>
+<p>Keep in mind that on macOS multiple views can easily be visible at the same time and <a href="::responderchain">the rules of the responder chain apply.</a></p>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

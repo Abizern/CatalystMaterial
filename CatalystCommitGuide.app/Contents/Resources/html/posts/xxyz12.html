@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I support mouse hovering - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I support mouse hovering<span id="4e1f066e-1"></span></h1>
+<p>Apple supports hovering in Catalyst via a new gesture recognizer, the so-called <code>UIHoverGestureRecognizer</code>. It works in a very simple manner.</p>
+<ol>
+<li>First you initialize a new hover gesture recognizer</li>
+<li>Then, you add it to your view</li>
+<li>Finally, you implement the method to be called when the user hovers</li>
+</ol>
+<p>Now, for every mouse movement within the containment of the view, your method will be called and you can query the gesture recognizer for the position in order to implement custom logic (as Apple does in the Stocks.app when you hover over a Stock's price history).</p>
+<p>Below is a simple implementation:</p>
+<pre class="Swift"><code><span class="source swift"><span class="keyword other declaration-modifier swift">final</span> <span class="storage type swift">class</span> MyHoverViewController: UIViewController {
+    <span class="keyword other declaration-modifier swift">override</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">viewDidLoad</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span><span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword other statement swift">super</span><span class="keyword operator custom postfix unary swift">.</span>viewDidLoad()
+        <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Create the recognizer</span>
+        <span class="storage type swift">let</span> hover <span class="keyword operator assignment swift">=</span> UIHoverGestureRecognizer(target: <span class="keyword other statement swift">self</span>, action: #selector(mouseDidMove(with:)))
+        <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Add it to the view</span>
+        view<span class="keyword operator custom postfix unary swift">.</span>addGestureRecognizer(hover)
+    <span class="punctuation definition code-block end swift">}</span></span>
+
+    <span class="storage modifier attribute swift"><span class="punctuation definition attribute swift">@</span>objc</span> <span class="meta function-declaration swift"><span class="storage type function swift">func</span> <span class="entity type function swift">mouseDidMove</span><span class="meta parameter-clause swift"><span class="punctuation definition function-arguments begin swift">(</span>with recognizer: UIHoverGestureRecognizer<span class="punctuation definition function-arguments end swift">)</span></span> <span class="punctuation definition code-block begin swift">{</span>
+        <span class="keyword statement swift">guard</span> <span class="storage type swift">let</span> view <span class="keyword operator assignment swift">=</span> recognizer<span class="keyword operator custom postfix unary swift">.</span>view <span class="keyword control if swift">else</span> { <span class="keyword control transfer swift">return</span> <span class="punctuation definition code-block end swift">}</span></span>
+        <span class="comment line double-slash swift"><span class="punctuation definition comment line double-slash swift">//</span> Calculate the location</span>
+        <span class="storage type swift">let</span> locationInView <span class="keyword operator assignment swift">=</span> recognizer<span class="keyword operator custom postfix unary swift">.</span>location(<span class="keyword control loop swift">in</span>: view)
+        print(<span class="meta literal string swift"><span class="string quoted double swift">&quot;</span><span class="string quoted double swift">H</span><span class="string quoted double swift">o</span><span class="string quoted double swift">v</span><span class="string quoted double swift">e</span><span class="string quoted double swift">r</span><span class="string quoted double swift">i</span><span class="string quoted double swift">n</span><span class="string quoted double swift">g</span><span class="string quoted double swift"> </span><span class="string quoted double swift">a</span><span class="string quoted double swift">t</span><span class="string quoted double swift"> </span><span class="string quoted double swift">l</span><span class="string quoted double swift">o</span><span class="string quoted double swift">c</span><span class="string quoted double swift">a</span><span class="string quoted double swift">t</span><span class="string quoted double swift">i</span><span class="string quoted double swift">o</span><span class="string quoted double swift">n</span><span class="string quoted double swift"> </span><span class="support punctuation expression begin swift">\(</span><span class="meta expression swift">locationInView</span><span class="support punctuation expression end swift">)</span><span class="string quoted double swift">&quot;</span></span>)
+    }
+}
+</span></code></pre></code></pre>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>

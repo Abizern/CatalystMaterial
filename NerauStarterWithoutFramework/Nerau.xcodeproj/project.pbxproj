@@ -36,6 +36,7 @@
 		4D7CF94F22B96899008C6F8A /* ResultTimeIntervalListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7CF94E22B96899008C6F8A /* ResultTimeIntervalListController.swift */; };
 		4D7CF95122B974D1008C6F8A /* Result.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D7CF95022B974D1008C6F8A /* Result.storyboard */; };
 		4D9838BF22C7F86800A7251E /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9838BE22C7F86800A7251E /* SettingsController.swift */; };
+		AD675ECC22CE3FBD006B5181 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD675ECB22CE3FBD006B5181 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		4D7CF94E22B96899008C6F8A /* ResultTimeIntervalListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTimeIntervalListController.swift; sourceTree = "<group>"; };
 		4D7CF95022B974D1008C6F8A /* Result.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Result.storyboard; sourceTree = "<group>"; };
 		4D9838BE22C7F86800A7251E /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		AD675ECB22CE3FBD006B5181 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 		3B10AC3D22B8EED800D835A4 = {
 			isa = PBXGroup;
 			children = (
+				AD675ECB22CE3FBD006B5181 /* SceneDelegate.swift */,
 				3B10AC4822B8EED800D835A4 /* Nerau */,
 				4D7CF93C22B96010008C6F8A /* NerauModelTests */,
 				3B10AC4722B8EED800D835A4 /* Products */,
@@ -349,6 +352,7 @@
 				4D49D1B522BE35B800D83741 /* HelpContactController.swift in Sources */,
 				22A60D4622CDECE300ED9F1E /* TrainConfiguration.swift in Sources */,
 				22A60D4722CDECE300ED9F1E /* NerauModel.xcdatamodeld in Sources */,
+				AD675ECC22CE3FBD006B5181 /* SceneDelegate.swift in Sources */,
 				22A60D4A22CDECE300ED9F1E /* TrainingLogic.swift in Sources */,
 				22A60D4B22CDECE300ED9F1E /* TrainResult.swift in Sources */,
 				4D7CF94F22B96899008C6F8A /* ResultTimeIntervalListController.swift in Sources */,
@@ -530,17 +534,18 @@
 				CODE_SIGN_ENTITLEMENTS = Nerau/Nerau.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nerau/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stylemac.Nerau;
+				PRODUCT_BUNDLE_IDENTIFIER = org.abizern.Nerau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SUPPORTS_UIKITFORMAC = NO;
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -554,17 +559,18 @@
 				CODE_SIGN_ENTITLEMENTS = Nerau/Nerau.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Manual;
+				DERIVE_UIKITFORMAC_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Nerau/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stylemac.Nerau;
+				PRODUCT_BUNDLE_IDENTIFIER = org.abizern.Nerau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SUPPORTS_UIKITFORMAC = NO;
+				SUPPORTS_UIKITFORMAC = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

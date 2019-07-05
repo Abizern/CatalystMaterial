@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="Techou">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta content="Various Tech Tidbits" name="description" />    
+
+    <meta content="benedikt, terhechte, swift, rust, cargo, opensource, blog, speaker" name="keywords" />
+
+    <meta content="Benedikt Terhechte" name="author" />
+    <meta content="Benedikt Terhechte" property="og:title" />
+    <meta content="Various Tech Tidbits" property="og:description" />
+    <meta content="https://terhech.de" property="og:url" />
+    <meta content="Benedikt Terhechte" name="twitter:title" />
+    <meta content="Various Tech Tidbits" name="twitter:description" />
+    <meta content="summary" name="twitter:card" />
+
+    <meta content="https://terhech.de/img/benedikt@2x.png" name="twitter:image" />
+    <meta content="https://terhech.de/img/benedikt@2x.png" property="og:image" />
+
+    <meta name="twitter:site" content="@terhechte" />
+    <meta name="twitter:creator" content="@terhechte" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>How do I implement preferences with additional logic? - Benedikt Terhechte</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+    <input type="checkbox" style="display: none" id="menu-control">
+    <main class="flex container">
+        <div class="book-page">
+            
+    <article class="markdown">
+	<h1>How do I implement preferences with additional logic?<span id="9a1a9f55-1"></span></h1>
+<p>Now, if you have more involved logic in your settings, special view controllers, web views, and other things, then this doesn't work well for you. In that case, you basically have three options.</p>
+<ol>
+<li>Don't display the preferences in a window, but present the view controller as a modal form or sheet instead</li>
+<li>Use the <a href="::multiwindow">new iOS multi window support to</a>, only on macOS, open the settings controller in a new window. This is a bit more involved but certainly the most feasible solution.</li>
+<li>Use AppKit to macOS specific preferences in a separate AppKit bundle and load it at runtime. We won't dive into this here, but you can find <a href="https://www.highcaffeinecontent.com/blog/20190607-Beyond-the-Checkbox-with-Catalyst-and-AppKit">more information on this in Steve Troughton-Smith' excellent article on the topic.</a></li>
+</ol>
+
+    </article>
+
+
+
+        </div>
+    </main>
+</body></html>
